@@ -1,0 +1,19 @@
+{
+  "name": "ts-rules",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kinogam/ts-rules.git"
+  },
+  "author": "kinogam",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kinogam/ts-rules/issues"
+  },
+  "homepage": "https://github.com/kinogam/ts-rules#readme"
+}
