@@ -1,8 +1,8 @@
-class ValidateInfo{
-    invalid: boolean
+class ValidateInfo {
+    invalid: boolean;
 }
 
-function rules(config: Object, message?: Object):(origin: any) => ValidateInfo{
+function rules(config: Object, message?: Object): (origin: any) => ValidateInfo {
     return (origin: any) => {
         let info: ValidateInfo = new ValidateInfo();
         info.invalid = false;
