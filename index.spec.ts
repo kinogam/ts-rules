@@ -11,7 +11,7 @@ describe('simple validate', () => {
                     'p': 'required'
                 });
 
-            expect(r(obj).invalid).toBe(false);
+            expect(r(obj).valid).toBe(true);
         });
     });
 
