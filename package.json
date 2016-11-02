@@ -3,9 +3,9 @@
   "version": "0.2.1",
   "description": "",
   "main": "index.js",
+  "types": "./index.d.ts",
   "scripts": {
-    "test": "tsc && ./node_modules/karma/bin/karma start",
-    "prepublish": " tsc -d --module amd index.ts -outFile index.js"
+    "test": "tsc && ./node_modules/karma/bin/karma start"
   },
   "repository": {
     "type": "git",
@@ -16,7 +16,6 @@
   "bugs": {
     "url": "https://github.com/kinogam/ts-rules/issues"
   },
-  "typings": "./index.d.ts",
   "homepage": "https://github.com/kinogam/ts-rules#readme",
   "devDependencies": {
     "@types/jasmine": "^2.2.34",

@@ -1,7 +1,10 @@
 .idea
-*.js
-*.d.ts
-*.map
+src/*.js
+src/*.d.ts
+src/*.map
+index.spec.js
+index.spec.js.map
+index.js.map
 node_modules
 !karma.conf.js
 !test-main.js
