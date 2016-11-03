@@ -2,6 +2,7 @@
 src/*.js
 src/*.d.ts
 src/*.map
+*.log
 index.spec.js
 index.spec.js.map
 index.js.map
