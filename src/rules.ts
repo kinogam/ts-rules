@@ -1,13 +1,26 @@
-import {originRulesAnalyse} from "./origin-rules-analyse";
+import {originRulesAnalyse, RealRules} from "./origin-rules-analyse";
 
-type ruleFn = (data: Object) => {valid: boolean};
+type RuleResult = {
+  valid: boolean
+};
 
-export function rules(config: Object, message?: Object): ruleFn {
+type RuleFunction = (data: Object) => RuleResult;
 
-    this.realRules = originRulesAnalyse(config)
-
-    return (origin: any) => {
-        return {valid: true};
-    };
+interface OriginConfig{
+    [propName: string]: string
 }
 
+export {RuleResult, RuleFunction};
+
+export function rules(config: OriginConfig): RuleFunction {
+    let realRules = originRulesAnalyse(config),
+        ruleFn = getRuleFunction(realRules);
+
+    return ruleFn;
+}
+
+function getRuleFunction(realRules: RealRules): RuleFunction{
+    return  () => {
+        return {valid: true};
+    }
+}

@@ -16,7 +16,7 @@
         "no-unsafe-finally": true,
         "no-var-keyword": true,
         "one-line": [
-            true,
+            false,
             "check-open-brace",
             "check-whitespace"
         ],
@@ -25,7 +25,7 @@
             "double"
         ],
         "semicolon": [
-            true,
+            false,
             "always"
         ],
         "triple-equals": [

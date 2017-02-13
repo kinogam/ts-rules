@@ -1,30 +1,37 @@
-import {rules} from './rules';
+import {rules, RuleFunction} from './rules';
 
 describe('simple validate', () => {
 
-    describe('required', () => {
-        it('should be valid if property is not empty', () => {
-            let obj = {
-                    p: 'hello'
-                },
-                r = rules({
-                    p: 'required'
-                });
+    let json: any,
+        r: RuleFunction;
 
-            expect(r(obj).valid).toBe(true);
+    beforeEach(() => {
+        json = {};
+    });
+
+    describe('single field', () => {
+
+        it('require', () => {
+            r = rules({
+                p: 'required'
+            });
+
+            json = {
+                p: 'hellox'
+            };
+
+            expect(r(json).valid).toBe(true);
+
+            json = {
+                p: ''
+            };
+
+            expect(r(json).valid).toBe(false);
         });
 
-        // it('should be invalid if property is empty string', () => {
-        //     let obj = {
-        //             p: ''
-        //         },
-        //         r = rules({
-        //             p: 'required'
-        //         });
-        //
-        //     expect(r(obj).valid).toBe(false);
-        // });
     });
+
+
 
 });
 
