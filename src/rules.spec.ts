@@ -27,6 +27,12 @@ describe('simple validate', () => {
             };
 
             expect(r(json).valid).toBe(false);
+
+            json = {
+                p: '            '
+            };
+
+            expect(r(json).valid).toBe(false);
         });
 
     });
