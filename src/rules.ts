@@ -1,4 +1,5 @@
 import {originRulesAnalyse, RealRules} from "./origin-rules-analyse";
+import {validators} from "./build-in-validators";
 
 type RuleResult = {
   valid: boolean
@@ -20,7 +21,21 @@ export function rules(config: OriginConfig): RuleFunction {
 }
 
 function getRuleFunction(realRules: RealRules): RuleFunction{
-    return  () => {
+    return  (data) => {
+        for(let fieldName in realRules){
+            let filedItem = realRules[fieldName],
+                dataItem = data[fieldName];
+
+            for(let ruleItem of filedItem){
+                let valid = validators[ruleItem.method].apply(null, [dataItem].concat(ruleItem.params));
+
+
+                if(!valid){
+                    return {valid: false};
+                }
+            }
+        }
+
         return {valid: true};
     }
 }
