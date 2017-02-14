@@ -17,7 +17,7 @@
     "url": "https://github.com/kinogam/ts-rules/issues"
   },
   "homepage": "https://github.com/kinogam/ts-rules#readme",
-  "dependencies": {
+  "devDependencies": {
     "@types/jasmine": "^2.5.42",
     "jasmine-core": "^2.5.2",
     "karma": "^1.4.1",
