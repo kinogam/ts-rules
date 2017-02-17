@@ -1,4 +1,4 @@
-export const ParamType = {
-    PROPERTY: 1,
-    VALUE: 2
+export enum ParamType{
+    PROPERTY,
+    VALUE
 };

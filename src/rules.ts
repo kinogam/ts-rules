@@ -1,13 +1,16 @@
 import {originRulesAnalyse, RealRules} from "./origin-rules-analyse";
-import {validators} from "./build-in-validators";
+import {ValidatorCollection, Validator} from "./build-in-validators";
 
 type RuleResult = {
-  valid: boolean
+    valid: boolean
 };
 
-type RuleFunction = (data: Object) => RuleResult;
+interface RuleFunction extends Function{
+    (data: Object): RuleResult,
+    register?: (methodName: string, fn: Function) => void
+}
 
-interface OriginConfig{
+interface OriginConfig {
     [propName: string]: string
 }
 
@@ -15,22 +18,35 @@ export {RuleResult, RuleFunction};
 
 export function rules(config: OriginConfig): RuleFunction {
     let realRules = originRulesAnalyse(config),
-        ruleFn = getRuleFunction(realRules);
+        newValidators = ValidatorCollection.create(),
+        ruleFn = getRuleFunction(realRules, newValidators);
+
+    ruleFn.register = (methodName: string, fn: Function) => {
+        newValidators[methodName] = fn;
+    };
 
     return ruleFn;
 }
 
-function getRuleFunction(realRules: RealRules): RuleFunction{
-    return  (data) => {
-        for(let fieldName in realRules){
+function getRuleFunction(realRules: RealRules, newValidators: Validator): RuleFunction {
+    return (data) => {
+        for (let fieldName in realRules) {
             let filedItem = realRules[fieldName],
                 dataItem = data[fieldName];
 
-            for(let ruleItem of filedItem){
-                let valid = validators[ruleItem.method].apply(null, [dataItem].concat(ruleItem.params));
+            for (let ruleItem of filedItem) {
 
+                let params: any[];
 
-                if(!valid){
+                if(ruleItem.params){
+                    params =  ruleItem.params.map((param) => {
+                        return param.value;
+                    });
+                }
+
+                let valid = newValidators[ruleItem.method].apply(null, [dataItem].concat(params));
+
+                if (!valid) {
                     return {valid: false};
                 }
             }
