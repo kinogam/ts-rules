@@ -1,9 +1,9 @@
 import {originRulesAnalyse, RealRules} from "./origin-rules-analyse";
 import {ValidatorCollection, Validator} from "./build-in-validators";
 
-type RuleResult = {
+interface RuleResult{
     valid: boolean
-};
+}
 
 interface RuleFunction extends Function{
     (data: Object): RuleResult,

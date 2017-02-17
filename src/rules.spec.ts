@@ -114,6 +114,24 @@ describe('simple validate', () => {
             expect(r(json).valid).toBe(true);
         });
 
+        it('multiple rules', () => {
+            r = rules({
+                p: 'email | maxLen: 14'
+            });
+
+            json = {
+                p: 'kino@gmail.com'
+            };
+
+            expect(r(json).valid);
+
+            json = {
+                p: 'kinogam@gmail.com'
+            };
+
+            expect(r(json).valid).toBe(false);
+        });
+
     });
 
 
