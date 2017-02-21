@@ -97,6 +97,102 @@ describe('simple validate', () => {
 
         });
 
+        it('eq', () => {
+
+            r = rules({
+                p: `eq: 'kino'`
+            });
+
+            json = {
+                p: 'kino'
+            };
+
+            expect(r(json).valid).toBe(true);
+
+            json = {
+                p: 'onik'
+            };
+
+            expect(r(json).valid).toBe(false);
+        });
+
+        it('gt', () => {
+
+            r = rules({
+                age: `gt: 18`
+            });
+
+            json = {
+                age: 20
+            };
+
+            expect(r(json).valid).toBe(true);
+
+            json = {
+                age: 17
+            };
+
+            expect(r(json).valid).toBe(false);
+        });
+
+        it('gte', () => {
+
+            r = rules({
+                age: `gte: 18`
+            });
+
+            json = {
+                age: 18
+            };
+
+            expect(r(json).valid).toBe(true);
+
+            json = {
+                age: 17
+            };
+
+            expect(r(json).valid).toBe(false);
+        });
+
+        it('lt', () => {
+
+            r = rules({
+                age: `lt: 18`
+            });
+
+            json = {
+                age: 17
+            };
+
+            expect(r(json).valid).toBe(true);
+
+            json = {
+                age: 20
+            };
+
+            expect(r(json).valid).toBe(false);
+        });
+
+        it('lte', () => {
+
+            r = rules({
+                age: `lte: 18`
+            });
+
+            json = {
+                age: 18
+            };
+
+            expect(r(json).valid).toBe(true);
+
+            json = {
+                age: 20
+            };
+
+            expect(r(json).valid).toBe(false);
+        });
+
+
         it('custom rule', () => {
             r = rules({
                 p: 'myRule: "kinogam"'
@@ -131,6 +227,20 @@ describe('simple validate', () => {
 
             expect(r(json).valid).toBe(false);
         });
+
+        it('variable', () => {
+            r = rules({
+                pwd1: 'required',
+                pwd2: `eq: {{pwd1}}`
+            });
+
+            json = {
+                pwd1: 'hello123',
+                pwd2: 'hello123'
+            };
+
+            expect(r(json).valid).toBe(true);
+        })
 
     });
 
