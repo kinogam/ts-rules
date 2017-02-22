@@ -10,3 +10,4 @@ node_modules
 !karma.conf.js
 !test-main.js
 coverage
+dist

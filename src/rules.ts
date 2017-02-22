@@ -1,5 +1,6 @@
 import {originRulesAnalyse, RealRules} from "./origin-rules-analyse";
 import {ValidatorCollection, Validator} from "./build-in-validators";
+import {ParamType} from "./enum-type";
 
 interface RuleResult{
     valid: boolean
@@ -40,7 +41,13 @@ function getRuleFunction(realRules: RealRules, newValidators: Validator): RuleFu
 
                 if(ruleItem.params){
                     params =  ruleItem.params.map((param) => {
-                        return param.value;
+                        if(param.type === ParamType.PROPERTY){
+                            let field = param.value.replace(/^\s*\{\{|\}\}\s*$/g, '');
+                            return data[field];
+                        }
+                        else {
+                            return param.value;
+                        }
                     });
                 }
 
