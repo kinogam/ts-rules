@@ -35,7 +35,6 @@ describe('simple validate', () => {
             expect(r(json).valid).toBe(false);
         });
 
-
         it('number', () => {
             r = rules({
                 p: 'number'
@@ -192,7 +191,6 @@ describe('simple validate', () => {
             expect(r(json).valid).toBe(false);
         });
 
-
         it('custom rule', () => {
             r = rules({
                 p: 'myRule: "kinogam"'
@@ -228,6 +226,11 @@ describe('simple validate', () => {
             expect(r(json).valid).toBe(false);
         });
 
+    });
+
+
+    describe('multiple fields', () => {
+
         it('variable', () => {
             r = rules({
                 pwd1: 'required',
@@ -240,10 +243,40 @@ describe('simple validate', () => {
             };
 
             expect(r(json).valid).toBe(true);
-        })
+
+            json = {
+                pwd1: 'hello123',
+                pwd2: 'hello234'
+            };
+
+            expect(r(json).valid).toBe(false);
+        });
+
+        it('mix rules test', () => {
+            r = rules({
+                name: 'required | maxLen: 15',
+                age: 'required | number',
+                desc: 'maxLen: 20'
+            });
+
+            json = {
+                name: 'Tom',
+                age: 28,
+                desc: ''
+            };
+
+            expect(r(json).valid).toBe(true);
+
+            json = {
+                name: '',
+                age: 21,
+                desc: 'Hello'
+            };
+
+            expect(r(json).valid).toBe(false);
+        });
 
     });
-
 
 });
 
