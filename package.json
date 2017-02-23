@@ -5,7 +5,8 @@
   "main": "index.js",
   "types": "./index.d.ts",
   "scripts": {
-    "test": "karma start --single-run=false"
+    "test": "karma start",
+    "test:watch": "karma start --single-run=false"
   },
   "repository": {
     "type": "git",
