@@ -228,7 +228,6 @@ describe('simple validate', () => {
 
     });
 
-
     describe('multiple fields', () => {
 
         it('variable', () => {
@@ -278,5 +277,25 @@ describe('simple validate', () => {
 
     });
 
+    describe('field info', () => {
+
+        it('field validation', () => {
+           r = rules({
+               p1: 'required',
+               p2: 'required'
+           });
+
+           json = {
+               p1: 'kino',
+               p2: ''
+           };
+
+           let result = r(json);
+
+            expect(result.fields.p1.invalid).toBe(false);
+            expect(result.fields.p2.invalid).toBe(true);
+        });
+
+    });
 });
 

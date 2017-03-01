@@ -2,11 +2,18 @@ import {originRulesAnalyse, RealRules} from "./origin-rules-analyse";
 import {ValidatorCollection, Validator} from "./build-in-validators";
 import {ParamType} from "./enum-type";
 
-interface RuleResult{
+
+interface RuleResult {
+    fields: {
+        [propName: string]: {
+            message: string,
+            invalid: boolean
+        }
+    },
     valid: boolean
 }
 
-interface RuleFunction extends Function{
+interface RuleFunction extends Function {
     (data: Object): RuleResult,
     register?: (methodName: string, fn: Function) => void
 }
@@ -30,18 +37,29 @@ export function rules(config: OriginConfig): RuleFunction {
 }
 
 function getRuleFunction(realRules: RealRules, newValidators: Validator): RuleFunction {
-    return (data) => {
+    return (data: Object) => {
+
+        let ruleResult: RuleResult = {
+            fields: {},
+            valid: true
+        };
+
         for (let fieldName in realRules) {
             let filedItem = realRules[fieldName],
                 dataItem = data[fieldName];
+
+            let resultItem = ruleResult.fields[fieldName] = {
+                message: '',
+                invalid: false
+            };
 
             for (let ruleItem of filedItem) {
 
                 let params: any[];
 
-                if(ruleItem.params){
-                    params =  ruleItem.params.map((param) => {
-                        if(param.type === ParamType.PROPERTY){
+                if (ruleItem.params) {
+                    params = ruleItem.params.map((param) => {
+                        if (param.type === ParamType.PROPERTY) {
                             let field = param.value.replace(/^\s*\{\{|\}\}\s*$/g, '');
                             return data[field];
                         }
@@ -51,14 +69,14 @@ function getRuleFunction(realRules: RealRules, newValidators: Validator): RuleFu
                     });
                 }
 
-                let valid = newValidators[ruleItem.method].apply(null, [dataItem].concat(params));
+                resultItem.invalid = !newValidators[ruleItem.method].apply(null, [dataItem].concat(params));
 
-                if (!valid) {
-                    return {valid: false};
+                if (resultItem.invalid) {
+                    ruleResult.valid = false;
                 }
             }
         }
 
-        return {valid: true};
+        return ruleResult;
     }
 }
