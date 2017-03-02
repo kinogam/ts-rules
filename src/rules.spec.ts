@@ -251,6 +251,26 @@ describe('simple validate', () => {
             expect(r(json).valid).toBe(false);
         });
 
+        it('wildcard', () => {
+           r = rules({
+               '*': 'required'
+           });
+
+            json = {
+                p1: 'hello',
+                p2: 'world'
+            };
+
+            expect(r(json).valid).toBe(true);
+
+            json = {
+                p1: 'hello',
+                p2: ''
+            };
+
+            expect(r(json).valid).toBe(false);
+        });
+
         it('mix rules test', () => {
             r = rules({
                 name: 'required | maxLen: 15',
@@ -295,6 +315,7 @@ describe('simple validate', () => {
             expect(result.fields.p1.invalid).toBe(false);
             expect(result.fields.p2.invalid).toBe(true);
         });
+
 
     });
 });

@@ -1,4 +1,4 @@
-import {originRulesAnalyse, RealRules} from "./origin-rules-analyse";
+import {originRulesAnalyse, RealRules, updateRule} from "./origin-rules-analyse";
 import {ValidatorCollection, Validator} from "./build-in-validators";
 import {ParamType} from "./enum-type";
 
@@ -36,6 +36,20 @@ export function rules(config: OriginConfig): RuleFunction {
     return ruleFn;
 }
 
+function addWildCardRule(realRules: RealRules, data: Object) {
+    let wildCardRules = realRules['*'];
+    delete realRules['*'];
+
+    for(let fieldName in data){
+        if(realRules[fieldName] === undefined){
+            realRules[fieldName] = wildCardRules;
+        }
+        else{
+            realRules[fieldName] = realRules[fieldName].concat(wildCardRules);
+        }
+    }
+}
+
 function getRuleFunction(realRules: RealRules, newValidators: Validator): RuleFunction {
     return (data: Object) => {
 
@@ -43,6 +57,10 @@ function getRuleFunction(realRules: RealRules, newValidators: Validator): RuleFu
             fields: {},
             valid: true
         };
+
+        if ('*' in realRules) {
+            addWildCardRule(realRules, data);
+        }
 
         for (let fieldName in realRules) {
             let filedItem = realRules[fieldName],
@@ -69,7 +87,7 @@ function getRuleFunction(realRules: RealRules, newValidators: Validator): RuleFu
                     });
                 }
 
-                resultItem.invalid = !newValidators[ruleItem.method].apply(null, [dataItem].concat(params));
+                resultItem.invalid = !newValidators[ruleItem.method](...[dataItem].concat(params));
 
                 if (resultItem.invalid) {
                     ruleResult.valid = false;
