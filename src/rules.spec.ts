@@ -252,9 +252,9 @@ describe('simple validate', () => {
         });
 
         it('wildcard', () => {
-           r = rules({
-               '*': 'required'
-           });
+            r = rules({
+                '*': 'required'
+            });
 
             json = {
                 p1: 'hello',
@@ -300,22 +300,72 @@ describe('simple validate', () => {
     describe('field info', () => {
 
         it('field validation', () => {
-           r = rules({
-               p1: 'required',
-               p2: 'required'
-           });
+            r = rules({
+                p1: 'required',
+                p2: 'required'
+            });
 
-           json = {
-               p1: 'kino',
-               p2: ''
-           };
+            json = {
+                p1: 'kino',
+                p2: ''
+            };
 
-           let result = r(json);
+            let result = r(json);
 
             expect(result.fields.p1.invalid).toBe(false);
             expect(result.fields.p2.invalid).toBe(true);
         });
 
+        it('field message', () => {
+            let info = {
+                labels: {
+                    p1: 'my field',
+                    p2: 'your field'
+                },
+                message: {
+                    p1: {
+                        'required': '{{this}} is required',
+                        'maxLen': '{{this}} can not longer than 5 characters'
+                    },
+                    p2: {
+                        'eq': '{{this}} must equal to {{labels.p1}}'
+                    }
+                }
+            };
+
+            r = rules({
+                p1: 'required | maxLen: 5',
+                p2: 'eq: {{p1}}'
+            }, info);
+
+            json = {
+                p1: '',
+                p2: ''
+            };
+
+            let result = r(json);
+
+            expect(result.fields.p1.message).toBe('my field is required');
+
+            json = {
+                p1: '123456',
+                p2: ''
+            };
+
+            result = r(json);
+
+            expect(result.fields.p1.message).toBe('my field can not longer than 5 characters');
+
+            json = {
+                p1: '123',
+                p2: '234'
+            };
+
+            result = r(json);
+
+            expect(result.fields.p2.message).toBe('your field must equal to my field');
+
+        });
 
     });
 });

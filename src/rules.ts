@@ -22,9 +22,18 @@ interface OriginConfig {
     [propName: string]: string
 }
 
+interface ValidationInfo {
+    labels: {
+        [propName: string]: string
+    },
+    message: {
+        [propName: string]: string
+    }
+}
+
 export {RuleResult, RuleFunction};
 
-export function rules(config: OriginConfig): RuleFunction {
+export function rules(config: OriginConfig, info?: ValidationInfo): RuleFunction {
     let realRules = originRulesAnalyse(config),
         newValidators = ValidatorCollection.create(),
         ruleFn = getRuleFunction(realRules, newValidators);
