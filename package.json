@@ -20,12 +20,13 @@
   "homepage": "https://github.com/kinogam/ts-rules#readme",
   "devDependencies": {
     "@types/jasmine": "^2.5.42",
-    "jasmine-core": "^2.5.2",
+    "jasmine-core": "^2.6.4",
     "karma": "^1.4.1",
-    "karma-phantomjs-launcher": "^1.0.2",
     "karma-cli": "^1.0.1",
     "karma-jasmine": "^1.1.0",
-    "karma-typescript": "^2.1.7",
-    "typescript": "^2.1.6"
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-typescript": "^3.0.4",
+    "tslint": "^5.5.0",
+    "typescript": "^2.4.2"
   }
 }

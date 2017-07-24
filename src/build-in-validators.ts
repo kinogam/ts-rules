@@ -11,7 +11,7 @@ export const ValidatorCollection = {
             'number': (value): boolean => {
                 return /^-?\d+(?:\.\d+)?$/.test(value);
             },
-            'email': (value):boolean => {
+            'email': (value): boolean => {
                 return /^(\w+|\.+)((-\w+|\.+)|(\.+\w+))*\@\w+((\.|-)\w+)*\.\w+/.test(value);
             },
             'maxLen': (value, len): boolean => {
