@@ -202,11 +202,11 @@ and you can set error message, the 'labels' property is optional
         },
         message: {
             p1: {
-                'required': '{{this}} is required',
-                'maxLen': '{{this}} can not longer than 5 characters'
+                'required': '{{p1}} is required',
+                'maxLen': '{{p1}} can not longer than 5 characters'
             },
             p2: {
-                'eq': '{{this}} must equal to {{labels.p1}}'
+                'eq': '{{p2}} must equal to {{p1}}'
             }
         }
     };

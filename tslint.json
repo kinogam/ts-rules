@@ -12,7 +12,7 @@
         "no-duplicate-variable": true,
         "no-eval": true,
         "no-internal-module": true,
-        "no-trailing-whitespace": true,
+        "no-trailing-whitespace": false,
         "no-unsafe-finally": true,
         "no-var-keyword": true,
         "one-line": [
@@ -33,7 +33,7 @@
             "allow-null-check"
         ],
         "typedef-whitespace": [
-            true,
+            false,
             {
                 "call-signature": "nospace",
                 "index-signature": "nospace",
@@ -47,7 +47,7 @@
             "ban-keywords"
         ],
         "whitespace": [
-            true,
+            false,
             "check-branch",
             "check-decl",
             "check-operator",

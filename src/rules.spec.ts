@@ -1,3 +1,4 @@
+///<reference path="../node_modules/@types/jasmine/index.d.ts"/>
 import {rules, RuleFunction} from './rules';
 
 describe('simple validate', () => {
@@ -317,18 +318,18 @@ describe('simple validate', () => {
         });
 
         it('field message', () => {
-            let info = {
+            let info: {labels?: any, message: any} = {
                 labels: {
                     p1: 'my field',
                     p2: 'your field'
                 },
                 message: {
                     p1: {
-                        'required': '{{this}} is required',
-                        'maxLen': '{{this}} can not longer than 5 characters'
+                        'required': '{{p1}} is required',
+                        'maxLen': '{{p1}} can not longer than 5 characters'
                     },
                     p2: {
-                        'eq': '{{this}} must equal to {{labels.p1}}'
+                        'eq': '{{p2}} must equal to {{p1}}'
                     }
                 }
             };
