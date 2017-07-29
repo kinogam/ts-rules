@@ -1,4 +1,6 @@
 # ts-rules
+
+[![Build Status](https://travis-ci.org/kinogam/ts-rules.svg?branch=master)](https://travis-ci.org/kinogam/ts-rules)
 A powerful JSON validator that design to validate complex JSON object.
 
 # How to install
